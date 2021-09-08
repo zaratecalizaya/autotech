@@ -54,6 +54,12 @@
               <label for="remember">
                 Recuerdame
               </label>
+              <br>
+              <br>
+              <label for="remember">
+                No tienes una cuenta? <a href="register.php">Registrate</a>
+              </label>
+              
             </div>
           </div>
           <!-- /.col -->

@@ -217,7 +217,7 @@ class UsuarioDAO {
         $json = array();
         if(mysqli_num_rows($result)>0){
         	if ($line = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            $clave = $datos["clave"];
+            $clave = md5($datos["clave"]);
            // $mutil -> console_log('datosclave: '.$datos["clave"]);
            // $mutil -> console_log('clave: '.$clave);
            // $mutil -> console_log('lineclave: '.$line["Clave"]);
