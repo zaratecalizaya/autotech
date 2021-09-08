@@ -1,0 +1,56 @@
+<style>
+  body {
+    background-image: url('../imagenes/fondo.jpg');
+    background-repeat: no-repeat;
+  }
+  
+  .hero-image{
+    background-image: url('../imagenes/fondo.jpg');
+    background-repeat: no-repeat;
+  }
+  
+  .listUsuarioMovilWrapper {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  #listUsuarioMovil th, td {
+    white-space: nowrap;
+  }
+  
+  #listacomportamiento th, td {
+    white-space: nowrap;
+  }
+  #col1 {
+    border: black;
+   background:white;
+    width: 30%;
+ }
+ #col2 {
+    border: #000000;
+    background: white;
+    width: 40%;
+ }
+ #col3 {
+  border: black;
+  background: white;
+  width: 300%;
+}
+ #row {
+   display: flex;
+   width: 100%;
+ }
+  
+
+  table.dataTable thead .sorting:after,
+  table.dataTable thead .sorting:before,
+  table.dataTable thead .sorting_asc:after,
+  table.dataTable thead .sorting_asc:before,
+  table.dataTable thead .sorting_asc_disabled:after,
+  table.dataTable thead .sorting_asc_disabled:before,
+  table.dataTable thead .sorting_desc:after,
+  table.dataTable thead .sorting_desc:before,
+  table.dataTable thead .sorting_desc_disabled:after,
+  table.dataTable thead .sorting_desc_disabled:before {
+    bottom: .5em;
+  }
+</style>
