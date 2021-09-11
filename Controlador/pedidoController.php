@@ -1,9 +1,9 @@
 <?php
 
-require_once 'modelo/Funciones/categoriaDAO.php';
+require_once 'modelo/Funciones/pedidoDAO.php';
 require_once 'modelo/utilitario.php';
 
-class ControladorCategoria{
+class ControladorPedido{
   
     /* ==============================
      Registro de Usuario Web     
@@ -13,10 +13,7 @@ class ControladorCategoria{
  
  ///aqui
   
-
-
-
-    public function ctrRegistroCategoria(){
+    public function ctrRegistroPedido(){
       
         if(isset($_POST["id"])){
          
@@ -34,15 +31,19 @@ class ControladorCategoria{
             //  if (move_uploaded_file($_FILES['subir_archivo']['tmp_name'], $subir_archivo)) {
                // $mutil -> console_log('esta ingresando');
                   $datos = array(
-                        "nombre"=>$_POST["nombre"],
-                        "tipo"=>$_POST["tipo"],
+                    "fecha_pedido"=>$_POST["fecha_pedido"],
+                    "fecha_entrega"=>$_POST["fecha_entrega"],
+                    "hora_entrega"=>$_POST["hora_entrega"],
+                    "hora_pedido"=>$_POST["hora_pedido"],
+                    "precio_total"=>$_POST["precio_total"]
+                        
                         
                        //  "imagen"=>$subir_archivo
                          );
           
-                    $tabla = "categoria";
-                    $Categoriad = new categoriaDAO ();
-                    $respuesta = $Categoriad -> addCategoria($tabla,$datos);
+                    $tabla = "pedido";
+                    $Pedidod = new pedidoDAO ();
+                    $respuesta = $Pedidod -> addPedido($tabla,$datos);
                    // return $respuesta;  
                     if ($respuesta==true){
                       return "true";
@@ -58,8 +59,12 @@ class ControladorCategoria{
             }else{
              
                $datos = array("id"=>$_POST["id"],
-            "nombre"=>$_POST["nombre"],
-            "tipo"=>$_POST["tipo"],
+            "fecha_pedido"=>$_POST["fecha_pedido"],
+            "fecha_entrega"=>$_POST["fecha_entrega"],
+            "hora_entrega"=>$_POST["hora_entrega"],
+            "hora_pedido"=>$_POST["hora_pedido"],
+            "precio_total"=>$_POST["precio_total"]
+            
                    
                    // "imagen"=>""
                  
@@ -67,9 +72,9 @@ class ControladorCategoria{
                    
                    );
             
-                  $tabla = "categoria";
-                  $Categoriad = new categoriaDAO();
-                  $respuesta = $Categoriad -> updateCategoria($tabla,$datos);
+                  $tabla = "pedido";
+                  $Pedidod = new pedidoDAO();
+                  $respuesta = $Pedidod -> updatePedido($tabla,$datos);
             
                   //return $respuesta;
                   if ($respuesta==true){
@@ -91,12 +96,12 @@ class ControladorCategoria{
 
 
 
-      public function ctrListarCategoria($pagina,$cantidad){
+      public function ctrListarPedido($pagina,$cantidad){
       
             
-       $tabla = "categoria";
-       $Categoriad = new categoriaDAO();
-        $respuesta = $Categoriad -> listCategoria($pagina,$cantidad);
+       $tabla = "pedido";
+       $Pedidod = new pedidoDAO();
+        $respuesta = $Pedidod -> listPedido($pagina,$cantidad);
     
         return $respuesta;
   
@@ -105,13 +110,13 @@ class ControladorCategoria{
 
 
           
-      public function ctrActualizarEstadoCategoria($id){
+      public function ctrActualizarEstadoPedido($id){
       
 
-        $tabla = "categoria";
+        $tabla = "pedido";
         $datos = array("id"=>$id);
-        $Categoriad = new categoriaDAO();
-        $respuesta = $Categoriad -> updatestatuscategoria($tabla,$datos);
+        $Pedidod = new pedidoDAO();
+        $respuesta = $Pedidod -> updatestatuspedido($tabla,$datos);
         return $respuesta; 
         
       

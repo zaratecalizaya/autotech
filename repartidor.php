@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,7 +33,7 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="" alt="" class="brand-image img-circle elevation-3"
+      <img src="imagenes/minilogobago.png" alt="Bago Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Autotech</span>
     </a>
@@ -79,7 +81,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./categoria.php" class="nav-link ">
+                <a href="./Categoria.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categorias</p>
                 </a>
@@ -148,8 +150,7 @@
           </li>
         </ul>
       </nav>
-    
-    
+        
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -162,12 +163,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-white">Usuario</h1>
+            <h1 class="m-0 text-white">Repartidor</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="tableroAlmacenero.php">Inicio</a></li>
-              <li class="breadcrumb-item active text-white">Usuario</li>
+              <li class="breadcrumb-item active text-white">Repartidor</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -182,7 +183,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header" >
-                <h3 class="card-title">Lista de Usuario</h3>
+                <h3 class="card-title">Lista de Repartidor</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -191,57 +192,58 @@
                   <tr>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Contraseña</th>
+                    <th>Paterno</th>
+                    <th>Materno</th>
+                    <th>Telefono</th>
+                    <th>Licencia</th>
                     <th>Estado</th>
                     <th>Acciones</th>
-                
                     
                   </thead>
                   <tbody>
                  <?php 
-                    require_once 'Controlador/usuariotodoController.php';
+                    require_once 'Controlador/RepartidorController.php';
   
                   
-                    $cusuariotodo = new ControladorUsuariotodo();
-                    $list=  $cusuariotodo -> ctrListarUsuariotodo(1,1000);
+                    $cRepartidor = new ControladorRepartidor();
+                    $list=  $cRepartidor -> ctrListarRepartidor(1,1000);
                     
                     while (count($list)>0){
-                      $Usuariotodo = array_shift($list);
+                      $Repartidor = array_shift($list);
                       echo "<tr>";
-                      $Did = array_shift($Usuariotodo );
+                      $Did = array_shift($Repartidor );
                       echo "<td>".$Did."</td>";
-                      $Dnombre = array_shift($Usuariotodo);
+                     
+                      $Dnombre= array_shift($Repartidor);
                       echo "<td>".$Dnombre."</td>";
-                      $Dcontraseña = array_shift($Usuariotodo);
-                      echo "<td>".$Dcontraseña."</td>";
-                      $Did_cliente = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Did_repartidor = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Did_rol = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Did_empleado = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Destado = array_shift($Usuariotodo);
-                      $Destadobtn="Habilitar";
+                      $Dpaterno = array_shift($Repartidor);
+                      echo "<td>".$Dpaterno."</td>";
+                      $Dmaterno = array_shift($Repartidor);
+                      echo "<td>".$Dmaterno."</td>";
+                      $Dtelefono = array_shift($Repartidor);
+                      echo "<td>".$Dtelefono."</td>";
+                      $Dlicencia = array_shift($Repartidor);
+                      echo "<td>".$Dlicencia."</td>";
+                      $Destado = array_shift($Repartidor);
+                      $Destadobtn="Libre";
                       $DestadoIco="thumbs-up";
                       echo "<td>".$Destado."</td>";
-                      if ($Destado=="Habilitado"){
-                        $Destadobtn="Deshabilitar";
+                      if ($Destado=="Libre"){
+                        $Destadobtn="Ocupado";
                         $DestadoIco="thumbs-down";
-                      }  
-                    
+                      }
                       echo '<td>
-                      <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\',\''.$Dcontraseña.'\')"><i class="fas fa-edit"></i> Editar</button> 
-                      <button class="btn" onclick="updateStatus('.$Did.')"><i class="far fa-'.$DestadoIco.'"></i>'.$Destadobtn.'</button>
-                     
-                      <form action="usuariotododelete.php" class="d-inline" method="post" >
-                      <input type="hidden" id="idusuariotodo" name="idusuariotodo" value="'.$Did .'" />
-                       <button type="submit" class="btn btn-danger">borrar</button>
-                    </form> 
-                      </td>';
-                      
-                
+                              <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\',\''.$Dpaterno.'\',\''.$Dmaterno.'\',\''.$Dtelefono.'\',\''.$Dlicencia.'\')"><i class="fas fa-edit"></i> Editar</button>
+                              <button class="btn" onclick="updateStatus('.$Did.')"><i class="far fa-'.$DestadoIco.'"></i>'.$Destadobtn.'</button>
+                             
+                            
+                              <form action="deleterepartidor.php" class="d-inline" method="post" >
+                              <input type="hidden" id="idrepartidor" name="idrepartidor" value="'.$Did .'" />
+                              <button type="submit" class="btn btn-danger">borrar</button>
+                            </form> 
+
+                              
+                              </td>';
                       echo "</tr>";
                     }
                     
@@ -263,8 +265,8 @@
  
         <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><label id="TituloUser">Agregar Usuario</label> </h3> 
-                <button id="nuevoNivel" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Usuario</button>
+                <h3 class="card-title"><label id="TituloUser">Agregar Repartidor</label> </h3> 
+                <button id="nuevoNivel" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Vehiculo</button>
                 
               </div>
               <!-- /.card-header -->
@@ -272,72 +274,48 @@
               <form role="form" enctype="multipart/form-data"  method="post"   >
                 <div class="card-body">
                   <div class="form-group">
-                    <label for="exampleInputId"></label>
+                 
                     <input type="hidden"  class="form-control"  id="id" name="id" placeholder="ID" value="0" readonly="true">
                   </div>
                   <div class="form-group">
                     <label for="exampleInputNombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese la nombre">
                   </div>
                   <div class="form-group">
-                    <label for="InputUsuario">Contraseña</label>
-                    <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese la contraseña">
+                    <label for="InputUsuario">Paterno</label>
+                    <input type="text" class="form-control" id="paterno" name="paterno" placeholder="Ingrese  paterno">
                   </div>
                    
                    
-                
-    
-    
-                                                <?php
-
-/*<div class="form-group">
-<label for="InputUsuario">Tipo</label>  
-            <select class="form-control select2"  id="tipo" name="tipo"  style="width: 100%;"  placeholder="Ingrese el tipo"> 
-              <option selected="selected">Auto</option>
-              <option>Camion</option>
-              <option>Moto</option>
-             
-            
-            </select>
-          </div>
-<div class="form-group">
-<label for="InputUsuario">Nombre</label>  
-            <select class="form-control select2"  id="nombre" name="nombre"  style="width: 100%;"  placeholder="seleccione repartidor"> 
-               <option selected="selected">seleccione</option>*/
-
-                                                  // require_once 'Controlador/RepartidorController.php';
-                     
-                                                    // $cusuario = new ControladorUsuariotodo();
-                                                   //  $list=  $cusuario -> listarrepartidorselect();
-                    
-                                                       // while (count($list)>0){
-                                                         // $User = array_shift($list);
-                                                         // $Did = array_shift($User);
-                                                       //   $Dnombres = array_shift($User);
-                                                          
-                                                        //  echo '<option value="'.$Did.'">'.$Dnombres.'</option>';
-                                                      //  }
-                                                 ?>
-                                          
-
-                      <option></option>
-                      
-                     
-                    
-                    </select>
+                  <div class="form-group">
+                    <label for="InputUsuario">Materno</label>
+                    <input type="text" class="form-control" id="materno" name="materno" placeholder="Ingrese el materno">
                   </div>
                   
-                </div>
-                   
+                  <div class="form-group">
+                    <label for="InputUsuario">Telefono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese telefono">
+                  </div>
+                  
+                 
+                  <div class="form-group">
+                                                <label>Licencia</label>
+                                                    <select class="form-control select2"  id="licencia" name="licencia" style="width: 100%;"> 
+                                                        <option selected="selected">Categoria A</option>
+                                                          <option>Categoria M</option>
+                                                          <option>Categoria B</option>
+}                                                   </select>
+                                           </div>
+          
+                 
                 
-
                   
                 </div>
                 <!-- /.card-body -->
 
                 <div class="card-footer">
                   <?php
-                    $resp= $cusuariotodo -> ctrRegistroUsuariotodo();
+                    $resp= $cRepartidor -> ctrRegistroRepartidor();
                     //echo "<script> alert(' respuesta: ".$resp." ')</script>";
                     if ($resp=="true"){
                      // echo "<script> alert(' respuesta: ".$resp." ')</script>";
@@ -346,7 +324,7 @@
                       //echo "<script> alert(' respuesta: al parecer fue falso XD')</script>";
                     }else{  
                       if ($resp!=""){
-                      echo "<script> alert(' respuesta: ".$resp." ')</script>";
+                      //echo "<script> alert(' respuesta: ".$resp." ')</script>";
                     } }
                     
                   ?>
@@ -409,44 +387,43 @@
 </script>
 
 <script>
-
- 
-   
-  
-  function saveData(id, nombre, contraseña){
+  function saveData(id, nombre,paterno,materno,telefono,licencia){
     document.getElementById("id").value = id;
     document.getElementById("nombre").value = nombre;
-    document.getElementById("contraseña").value = contraseña;
-  
+    document.getElementById("paterno").value = paterno;
+    document.getElementById("materno").value = materno;
+    document.getElementById("telefono").value = telefono;
+    document.getElementById("licencia").value = licencia;
  
- 
-    $('#TituloUser').text("Editar Usuario");
- //    document.getElementById("TituloUser").value = "Editar Usuario";  
+    $('#TituloUser').text("Editar repartidor");
+//    document.getElementById("TituloUser").value = "Editar Usuario";  
   }
   
   function newUser(){
     document.getElementById("id").value = 0;
     document.getElementById("nombre").value = "";
-    document.getElementById("contraseña").value = "";
-  
-   
+    document.getElementById("paterno").value = "";
+    document.getElementById("materno").value = "";
+    document.getElementById("telefono").value = 0;
+    document.getElementById("licencia").value = "";
      
     
-    $('#TituloUser').text("Agregar Usuario");
+    $('#TituloUser').text("Agregar repartidor");
   //  document.getElementById("TituloUser").value = "Agregar Usuario";  
   }
   
-   
+  
+  
   function updateStatus(id){
       var parametros = {
-                "id" : id,
+                "id" : id
         
               
         };
       
       $.ajax({
         type: "POST",
-        url: "estadousuariotodo.php",
+        url: "estadorepartidor.php",
         data: parametros,
         success:function( msg ) {
           window.location.href = window.location.href;
@@ -454,7 +431,6 @@
         }
        });
   }
- 
 </script>
 
 <!-- Usuario SCRIPTS -->

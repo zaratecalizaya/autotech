@@ -1,9 +1,9 @@
 <?php
 
-require_once 'modelo/Funciones/categoriaDAO.php';
+require_once 'modelo/Funciones/almacenDAO.php';
 require_once 'modelo/utilitario.php';
 
-class ControladorCategoria{
+class ControladorAlmacen{
   
     /* ==============================
      Registro de Usuario Web     
@@ -16,7 +16,7 @@ class ControladorCategoria{
 
 
 
-    public function ctrRegistroCategoria(){
+    public function ctrRegistroAlmacen(){
       
         if(isset($_POST["id"])){
          
@@ -35,14 +35,13 @@ class ControladorCategoria{
                // $mutil -> console_log('esta ingresando');
                   $datos = array(
                         "nombre"=>$_POST["nombre"],
-                        "tipo"=>$_POST["tipo"],
                         
                        //  "imagen"=>$subir_archivo
                          );
           
-                    $tabla = "categoria";
-                    $Categoriad = new categoriaDAO ();
-                    $respuesta = $Categoriad -> addCategoria($tabla,$datos);
+                    $tabla = "almacen";
+                    $Almacend = new almacenDAO ();
+                    $respuesta = $Almacend -> addAlmacen($tabla,$datos);
                    // return $respuesta;  
                     if ($respuesta==true){
                       return "true";
@@ -59,7 +58,6 @@ class ControladorCategoria{
              
                $datos = array("id"=>$_POST["id"],
             "nombre"=>$_POST["nombre"],
-            "tipo"=>$_POST["tipo"],
                    
                    // "imagen"=>""
                  
@@ -67,9 +65,9 @@ class ControladorCategoria{
                    
                    );
             
-                  $tabla = "categoria";
-                  $Categoriad = new categoriaDAO();
-                  $respuesta = $Categoriad -> updateCategoria($tabla,$datos);
+                  $tabla = "almacen";
+                  $Almacend = new almacenDAO();
+                  $respuesta = $Almacend -> updateAlmacen($tabla,$datos);
             
                   //return $respuesta;
                   if ($respuesta==true){
@@ -91,12 +89,12 @@ class ControladorCategoria{
 
 
 
-      public function ctrListarCategoria($pagina,$cantidad){
+      public function ctrListarAlmacen($pagina,$cantidad){
       
             
-       $tabla = "categoria";
-       $Categoriad = new categoriaDAO();
-        $respuesta = $Categoriad -> listCategoria($pagina,$cantidad);
+       $tabla = "almacen";
+       $Almacend = new almacenDAO();
+        $respuesta = $Almacend -> listAlmacen($pagina,$cantidad);
     
         return $respuesta;
   
@@ -105,13 +103,13 @@ class ControladorCategoria{
 
 
           
-      public function ctrActualizarEstadoCategoria($id){
+      public function ctrActualizarEstadoAlmacen($id){
       
 
-        $tabla = "categoria";
+        $tabla = "almacen";
         $datos = array("id"=>$id);
-        $Categoriad = new categoriaDAO();
-        $respuesta = $Categoriad -> updatestatuscategoria($tabla,$datos);
+        $Almacend = new almacenDAO();
+        $respuesta = $Almacend -> updatestatusalmacen($tabla,$datos);
         return $respuesta; 
         
       

@@ -71,12 +71,12 @@ if (!isset($_SESSION['session_id'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-white">Categoria</h1>
+            <h1 class="m-0 text-white">Almacen</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="tablero.php">Inicio</a></li>
-              <li class="breadcrumb-item active text-white">Categoria</li>
+              <li class="breadcrumb-item active text-white">Almacen</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -91,7 +91,7 @@ if (!isset($_SESSION['session_id'])) {
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header" >
-                <h3 class="card-title">Lista de Categoria</h3>
+                <h3 class="card-title">Lista de Almacen</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -100,48 +100,46 @@ if (!isset($_SESSION['session_id'])) {
                   <tr>
                     <th>Id</th>
                     <th>Nombre</th>
-                    <th>Tipo</th>
-                  
+                    
+                   <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
                   <?php 
-                    require_once 'Controlador/categoriaController.php';
-                   $categoria= new ControladorCategoria();
-                    $list=  $categoria -> ctrListarCategoria(1,1000);
+                    require_once 'Controlador/almacenController.php';
+                   $almacen = new ControladorAlmacen();
+                    $list=  $almacen -> ctrListarAlmacen(1,1000);
                     
                     while (count($list)>0){
-                      $Categoria = array_shift($list);
+                      $Almacen = array_shift($list);
                       echo "<tr>";
-                      $Did = array_shift($Categoria);
+                      $Did = array_shift($Almacen);
                       echo "<td>".$Did."</td>";
-                      $Dnombre = array_shift($Categoria);
+                      $Dnombre = array_shift($Almacen);
                       echo "<td>".$Dnombre."</td>";
-                      $Dtipo = array_shift($Categoria);
-                      echo "<td>".$Dtipo."</td>";
                      /* $Dimagen = array_shift($Vehiculo);
                       if ($Dimagen!=""){
                         echo "<td><img src='".$Dimagen."' width='100'></td>";  
                       }else{
                         echo "<td></td>";
                       }*/
-                     // $Destado = array_shift($Almacen);
-                    /*  $Destadobtn="Habilitar";
+                      $Destado = array_shift($Almacen);
+                      $Destadobtn="Habilitar";
                       $DestadoIco="thumbs-up";
                       echo "<td>".$Destado."</td>";
                       if ($Destado=="Habilitado"){
                         $Destadobtn="Deshabilitar";
                         $DestadoIco="thumbs-down";
-                      }*/
+                      }
                       
                       
                       echo '<td>
-                              <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\',\''.$Dtipo.'\')"><i class="fas fa-edit"></i> Editar</button>
+                              <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\')"><i class="fas fa-edit"></i> Editar</button>
                               <button class="btn" onclick="updateStatus('.$Did.')"><i class="far fa-'.$DestadoIco.'"></i>'.$Destadobtn.'</button>
                      
-                              <form action="deletecategoria.php" class="d-inline" method="post" >
-                              <input type="hidden" id="idcategoria" name="idcategoria" value="'.$Did .'" />
+                              <form action="deletealmacen.php" class="d-inline" method="post" >
+                              <input type="hidden" id="idalmacen" name="idalmacen" value="'.$Did .'" />
                                <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form> 
                               </td>';
@@ -167,8 +165,8 @@ if (!isset($_SESSION['session_id'])) {
  
         <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><label id="TituloUser">Agregar Categoria</label> </h3> 
-                <button id="nuevocategoria" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Categoria</button>
+                <h3 class="card-title"><label id="TituloUser">Agregar Almacen</label> </h3> 
+                <button id="nuevoalmacen" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo vehiculo</button>
                 
               </div>
               <!-- /.card-header -->
@@ -181,13 +179,9 @@ if (!isset($_SESSION['session_id'])) {
                   </div>
                   <div class="form-group">
                     <label for="exampleInputNombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre la categoria">
+                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre del almacen">
                   </div>
                   
-                  <div class="form-group">
-                    <label for="exampleInputNombre">Tipo</label>
-                    <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Ingrese el nombre del almacen">
-                  </div>
 
                  
                     <?php
@@ -225,7 +219,7 @@ if (!isset($_SESSION['session_id'])) {
                 <div class="card-footer">
                   <?php
                   
-                    $resp= $categoria -> ctrRegistroCategoria();
+                    $resp= $almacen -> ctrRegistroAlmacen();
                     //echo "<script> alert(' respuesta: ".$resp." ')</script>";
                     if ($resp=="true"){
                       //echo "<script> alert(' respuesta: ".$resp." ')</script>";
@@ -293,10 +287,9 @@ if (!isset($_SESSION['session_id'])) {
 </script>
 
 <script>
-  function saveData(id,nombre,tipo){
+  function saveData(id,nombre){
     document.getElementById("id").value = id;
     document.getElementById("nombre").value = nombre;
-    document.getElementById("tipo").value = tipo;
   
    
     $('#TituloUser').text("Editar almacen");
@@ -306,7 +299,6 @@ if (!isset($_SESSION['session_id'])) {
   function newUser(){
     document.getElementById("id").value = 0;
     document.getElementById("nombre").value = "";
-    document.getElementById("tipo").value = "";
     
    
     $('#TituloUser').text("Agregar almacen");

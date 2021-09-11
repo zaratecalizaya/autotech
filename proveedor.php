@@ -38,7 +38,7 @@ if (!isset($_SESSION['session_id'])) {
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src=<?php echo $_SESSION['session_perfil'] ?> alt="Bago Logo" class="brand-image img-circle elevation-3"
+      <img src=<?php echo $_SESSION['session_perfil'] ?> alt="" class="brand-image img-circle elevation-3"
            style="opacity: .8">
       <span class="brand-text font-weight-light">Autotech</span>
     </a>
@@ -71,12 +71,12 @@ if (!isset($_SESSION['session_id'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-white">Categoria</h1>
+            <h1 class="m-0 text-white">Proveedor</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="tablero.php">Inicio</a></li>
-              <li class="breadcrumb-item active text-white">Categoria</li>
+              <li class="breadcrumb-item active text-white">Proveedor</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -91,7 +91,7 @@ if (!isset($_SESSION['session_id'])) {
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header" >
-                <h3 class="card-title">Lista de Categoria</h3>
+                <h3 class="card-title">Lista de Proveedor</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -99,49 +99,42 @@ if (!isset($_SESSION['session_id'])) {
                   <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                  
+                    <th>Nit</th>
+                    <th>Razon Social</th>
+                    <th>Telefono</th>
+                    <th>Dirección</th>
+                    <th>Correo</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
                   <?php 
-                    require_once 'Controlador/categoriaController.php';
-                   $categoria= new ControladorCategoria();
-                    $list=  $categoria -> ctrListarCategoria(1,1000);
+                    require_once 'Controlador/proveedorController.php';
+                   $proveedor = new ControladorProveedor();
+                    $list=  $proveedor -> ctrListarProveedor(1,1000);
                     
                     while (count($list)>0){
-                      $Categoria = array_shift($list);
+                      $Proveedor = array_shift($list);
                       echo "<tr>";
-                      $Did = array_shift($Categoria);
+                      $Did = array_shift($Proveedor);
                       echo "<td>".$Did."</td>";
-                      $Dnombre = array_shift($Categoria);
-                      echo "<td>".$Dnombre."</td>";
-                      $Dtipo = array_shift($Categoria);
-                      echo "<td>".$Dtipo."</td>";
-                     /* $Dimagen = array_shift($Vehiculo);
-                      if ($Dimagen!=""){
-                        echo "<td><img src='".$Dimagen."' width='100'></td>";  
-                      }else{
-                        echo "<td></td>";
-                      }*/
-                     // $Destado = array_shift($Almacen);
-                    /*  $Destadobtn="Habilitar";
-                      $DestadoIco="thumbs-up";
-                      echo "<td>".$Destado."</td>";
-                      if ($Destado=="Habilitado"){
-                        $Destadobtn="Deshabilitar";
-                        $DestadoIco="thumbs-down";
-                      }*/
-                      
+                      $Dnit = array_shift($Proveedor);
+                      echo "<td>".$Dnit."</td>";
+                      $Drazon_social = array_shift($Proveedor);
+                      echo "<td>".$Drazon_social."</td>";
+                      $Dtelefono = array_shift($Proveedor);
+                      echo "<td>".$Dtelefono."</td>";
+                      $Ddirección = array_shift($Proveedor);
+                      echo "<td>".$Ddirección."</td>";
+                      $Dcorreo = array_shift($Proveedor);
+                      echo "<td>".$Dcorreo."</td>";
+                   
                       
                       echo '<td>
-                              <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\',\''.$Dtipo.'\')"><i class="fas fa-edit"></i> Editar</button>
-                              <button class="btn" onclick="updateStatus('.$Did.')"><i class="far fa-'.$DestadoIco.'"></i>'.$Destadobtn.'</button>
-                     
-                              <form action="deletecategoria.php" class="d-inline" method="post" >
-                              <input type="hidden" id="idcategoria" name="idcategoria" value="'.$Did .'" />
+                              <button class="btn" onclick="saveData('.$Did.',\''.$Dnit.'\','.$Drazon_social.',\''.$Dtelefono.'\','.$Ddirección.',\''.$Dcorreo.'\')"><i class="fas fa-edit"></i> Editar</button>
+                                                  
+                              <form action="deleteproveedor.php" class="d-inline" method="post" >
+                              <input type="hidden" id="idproveedor" name="idproveedor" value="'.$Did .'" />
                                <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form> 
                               </td>';
@@ -167,8 +160,8 @@ if (!isset($_SESSION['session_id'])) {
  
         <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><label id="TituloUser">Agregar Categoria</label> </h3> 
-                <button id="nuevocategoria" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Categoria</button>
+                <h3 class="card-title"><label id="TituloUser">Agregar Proveedor</label> </h3> 
+                <button id="nuevoproveedor" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Proveedor</button>
                 
               </div>
               <!-- /.card-header -->
@@ -180,43 +173,29 @@ if (!isset($_SESSION['session_id'])) {
                     <input type="hidden"  class="form-control"  id="id" name="id" placeholder="ID" value="0" readonly="true">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputNombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre la categoria">
+                    <label for="exampleInputNombre">Nit</label>
+                    <input type="text" class="form-control" id="nit" name="nit" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Razon Social</label>
+                    <input type="text" class="form-control" id="razon_social" name="razon_social" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Telefono</label>
+                    <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Dirección</label>
+                    <input type="text" class="form-control" id="dirección" name="dirección" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Correo</label>
+                    <input type="text" class="form-control" id="correo" name="correo" placeholder="Ingrese el nombre del almacen">
                   </div>
                   
-                  <div class="form-group">
-                    <label for="exampleInputNombre">Tipo</label>
-                    <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Ingrese el nombre del almacen">
-                  </div>
 
                  
-                    <?php
-
-                    
-                 /* <div class="form-group">
-                  <label for="InputUsuario">Imagen</label>
-                 <input type="hidden" name="MAX_FILE_SIZE" value="512000" />
-                  <p><input name="subir_archivo" type="file" /></p>
-                </div>*/
-
-                       //<div class="form-group">
-                         //<label>Rol del Empleado</label>
-                          //<select class="form-control select2" id="rol" name="rol"  style="width: 100%;"> 
-                      
-                     // require_once 'Controlador/usuarioController.php';
-                     
-                    // $rol = new ControladorUsuario();
-                     // $list=  $rol -> ctrListarRolSelect();
-                    
-                     // while (count($list)>0){
-                       // $User = array_shift($list);
-                       // $Did = array_shift($User);
-                       // $Dnombres = array_shift($User);
-                       // echo '<option value="'.$Did.'">'.$Dnombres.'</option>';
-                     // }
-                    ?>
-                    </select>
-                  </div>
+                  
                  
                   
                
@@ -225,7 +204,7 @@ if (!isset($_SESSION['session_id'])) {
                 <div class="card-footer">
                   <?php
                   
-                    $resp= $categoria -> ctrRegistroCategoria();
+                    $resp= $proveedor -> ctrRegistroProveedor();
                     //echo "<script> alert(' respuesta: ".$resp." ')</script>";
                     if ($resp=="true"){
                       //echo "<script> alert(' respuesta: ".$resp." ')</script>";
@@ -293,23 +272,31 @@ if (!isset($_SESSION['session_id'])) {
 </script>
 
 <script>
-  function saveData(id,nombre,tipo){
+  function saveData(id,nit,razon_social,telefono,dirección,correo){
     document.getElementById("id").value = id;
-    document.getElementById("nombre").value = nombre;
-    document.getElementById("tipo").value = tipo;
+    document.getElementById("nit").value = nit;
+    document.getElementById("razon_social").value = razon_social;
+    document.getElementById("telefono").value = telefono;
+    document.getElementById("dirección").value = dirección;
+    document.getElementById("correo").value = correo;
   
    
-    $('#TituloUser').text("Editar almacen");
+    $('#TituloUser').text("Editar proveedor");
 //    document.getElementById("TituloUser").value = "Editar Usuario";  
   }
   
   function newUser(){
     document.getElementById("id").value = 0;
-    document.getElementById("nombre").value = "";
-    document.getElementById("tipo").value = "";
+
+        document.getElementById("nit").value = 0;
+        document.getElementById("razon_social").value = "";
+        document.getElementById("telefono").value = 0;
+        document.getElementById("dirección").value = "";
+        document.getElementById("correo").value = "";
+        
     
    
-    $('#TituloUser').text("Agregar almacen");
+    $('#TituloUser').text("Agregar Proveedor");
   //  document.getElementById("TituloUser").value = "Agregar Usuario";  
   }
   

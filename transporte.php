@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,7 +81,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./categoria.php" class="nav-link ">
+                <a href="./Categoria.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categorias</p>
                 </a>
@@ -162,12 +164,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-white">Usuario</h1>
+            <h1 class="m-0 text-white">Transporte</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="tableroAlmacenero.php">Inicio</a></li>
-              <li class="breadcrumb-item active text-white">Usuario</li>
+              <li class="breadcrumb-item active text-white">Transporte</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -182,7 +184,7 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header" >
-                <h3 class="card-title">Lista de Usuario</h3>
+                <h3 class="card-title">Lista de Transporte</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -190,8 +192,10 @@
                   <thead>
                   <tr>
                     <th>Id</th>
+                    <th>Marca</th>
+                    <th>Placa</th>
+                    <th>Tipo</th>
                     <th>Nombre</th>
-                    <th>Contraseña</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 
@@ -199,30 +203,26 @@
                   </thead>
                   <tbody>
                  <?php 
-                    require_once 'Controlador/usuariotodoController.php';
+                    require_once 'Controlador/transporteController.php';
   
                   
-                    $cusuariotodo = new ControladorUsuariotodo();
-                    $list=  $cusuariotodo -> ctrListarUsuariotodo(1,1000);
+                    $ctransporte = new ControladorTransporte();
+                    $list=  $ctransporte -> ctrListarTransporte(1,1000);
                     
                     while (count($list)>0){
-                      $Usuariotodo = array_shift($list);
+                      $Transporte = array_shift($list);
                       echo "<tr>";
-                      $Did = array_shift($Usuariotodo );
+                      $Did = array_shift($Transporte );
                       echo "<td>".$Did."</td>";
-                      $Dnombre = array_shift($Usuariotodo);
-                      echo "<td>".$Dnombre."</td>";
-                      $Dcontraseña = array_shift($Usuariotodo);
-                      echo "<td>".$Dcontraseña."</td>";
-                      $Did_cliente = array_shift($Usuariotodo);
+                      $Dmarca = array_shift($Transporte);
+                      echo "<td>".$Dmarca."</td>";
+                      $Dplaca = array_shift($Transporte);
+                      echo "<td>".$Dplaca."</td>";
+                      $Dtipo = array_shift($Transporte);
+                      echo "<td>".$Dtipo."</td>";
+                      $Did_repartidor = array_shift($Transporte);
                       echo "<td>".$D."</td>";
-                      $Did_repartidor = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Did_rol = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Did_empleado = array_shift($Usuariotodo);
-                      echo "<td>".$D."</td>";
-                      $Destado = array_shift($Usuariotodo);
+                      $Destado = array_shift($Transporte);
                       $Destadobtn="Habilitar";
                       $DestadoIco="thumbs-up";
                       echo "<td>".$Destado."</td>";
@@ -232,12 +232,12 @@
                       }  
                     
                       echo '<td>
-                      <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\',\''.$Dcontraseña.'\')"><i class="fas fa-edit"></i> Editar</button> 
+                      <button class="btn" onclick="saveData('.$Did.',\''.$Dmarca.'\',\''.$Dplaca.'\',\''.$Dtipo.'\')"><i class="fas fa-edit"></i> Editar</button> 
                       <button class="btn" onclick="updateStatus('.$Did.')"><i class="far fa-'.$DestadoIco.'"></i>'.$Destadobtn.'</button>
                      
-                      <form action="usuariotododelete.php" class="d-inline" method="post" >
-                      <input type="hidden" id="idusuariotodo" name="idusuariotodo" value="'.$Did .'" />
-                       <button type="submit" class="btn btn-danger">borrar</button>
+                      <form action="deletetransporte.php" class="d-inline" method="post" >
+                      <input type="hidden" id="idtransporte" name="idtransporte" value="'.$Did .'" />
+                       <button type="submit" class="btn btn-danger">Eliminar</button>
                     </form> 
                       </td>';
                       
@@ -263,8 +263,8 @@
  
         <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><label id="TituloUser">Agregar Usuario</label> </h3> 
-                <button id="nuevoNivel" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Usuario</button>
+                <h3 class="card-title"><label id="TituloUser">Agregar Transporte</label> </h3> 
+                <button id="nuevoNivel" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Transporte</button>
                 
               </div>
               <!-- /.card-header -->
@@ -276,47 +276,45 @@
                     <input type="hidden"  class="form-control"  id="id" name="id" placeholder="ID" value="0" readonly="true">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputNombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre">
+                    <label for="exampleInputNombre">Marca</label>
+                    <input type="text" class="form-control" id="marca" name="marca" placeholder="Ingrese la marca">
                   </div>
                   <div class="form-group">
-                    <label for="InputUsuario">Contraseña</label>
-                    <input type="text" class="form-control" id="contraseña" name="contraseña" placeholder="Ingrese la contraseña">
+                    <label for="InputUsuario">Placa</label>
+                    <input type="text" class="form-control" id="placa" name="placa" placeholder="Ingrese el placa">
                   </div>
                    
                    
                 
     
     
-                                                <?php
-
-/*<div class="form-group">
-<label for="InputUsuario">Tipo</label>  
-            <select class="form-control select2"  id="tipo" name="tipo"  style="width: 100%;"  placeholder="Ingrese el tipo"> 
-              <option selected="selected">Auto</option>
-              <option>Camion</option>
-              <option>Moto</option>
-             
-            
-            </select>
-          </div>
-<div class="form-group">
-<label for="InputUsuario">Nombre</label>  
-            <select class="form-control select2"  id="nombre" name="nombre"  style="width: 100%;"  placeholder="seleccione repartidor"> 
-               <option selected="selected">seleccione</option>*/
-
-                                                  // require_once 'Controlador/RepartidorController.php';
+    <div class="form-group">
+    <label for="InputUsuario">Tipo</label>  
+                    <select class="form-control select2"  id="tipo" name="tipo"  style="width: 100%;"  placeholder="Ingrese el tipo"> 
+                      <option selected="selected">Auto</option>
+                      <option>Camion</option>
+                      <option>Moto</option>
                      
-                                                    // $cusuario = new ControladorUsuariotodo();
-                                                   //  $list=  $cusuario -> listarrepartidorselect();
                     
-                                                       // while (count($list)>0){
-                                                         // $User = array_shift($list);
-                                                         // $Did = array_shift($User);
-                                                       //   $Dnombres = array_shift($User);
+                    </select>
+                  </div>
+                  <div class="form-group">
+    <label for="InputUsuario">Nombre</label>  
+                    <select class="form-control select2"  id="nombre" name="nombre"  style="width: 100%;"  placeholder="seleccione repartidor"> 
+                    <option selected="selected">seleccione</option>
+                                                <?php
+                                                   require_once 'Controlador/repartidorController.php';
+                     
+                                                     $cusuario = new ControladorRepartidor();
+                                                     $list=  $cusuario -> listarrepartidorselect();
+                    
+                                                        while (count($list)>0){
+                                                          $User = array_shift($list);
+                                                          $Did = array_shift($User);
+                                                          $Dnombres = array_shift($User);
                                                           
-                                                        //  echo '<option value="'.$Did.'">'.$Dnombres.'</option>';
-                                                      //  }
+                                                          echo '<option value="'.$Did.'">'.$Dnombres.'</option>';
+                                                        }
                                                  ?>
                                           
 
@@ -337,7 +335,7 @@
 
                 <div class="card-footer">
                   <?php
-                    $resp= $cusuariotodo -> ctrRegistroUsuariotodo();
+                    $resp= $ctransporte -> ctrRegistroTransporte();
                     //echo "<script> alert(' respuesta: ".$resp." ')</script>";
                     if ($resp=="true"){
                      // echo "<script> alert(' respuesta: ".$resp." ')</script>";
@@ -413,26 +411,26 @@
  
    
   
-  function saveData(id, nombre, contraseña){
+  function saveData(id, marca, placa, tipo){
     document.getElementById("id").value = id;
-    document.getElementById("nombre").value = nombre;
-    document.getElementById("contraseña").value = contraseña;
-  
+    document.getElementById("marca").value = marca;
+    document.getElementById("placa").value = placa;
+    document.getElementById("tipo").value = tipo;
  
  
-    $('#TituloUser').text("Editar Usuario");
+    $('#TituloUser').text("Editar Transporte");
  //    document.getElementById("TituloUser").value = "Editar Usuario";  
   }
   
   function newUser(){
     document.getElementById("id").value = 0;
-    document.getElementById("nombre").value = "";
-    document.getElementById("contraseña").value = "";
-  
+    document.getElementById("marca").value = "";
+    document.getElementById("placa").value = "";
+    document.getElementById("tipo").value = "";
    
      
     
-    $('#TituloUser').text("Agregar Usuario");
+    $('#TituloUser').text("Agregar Transporte");
   //  document.getElementById("TituloUser").value = "Agregar Usuario";  
   }
   
@@ -446,7 +444,7 @@
       
       $.ajax({
         type: "POST",
-        url: "estadousuariotodo.php",
+        url: "estadotransporte.php",
         data: parametros,
         success:function( msg ) {
           window.location.href = window.location.href;

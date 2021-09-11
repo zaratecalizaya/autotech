@@ -1,9 +1,9 @@
 <?php
 
-require_once 'modelo/Funciones/categoriaDAO.php';
+require_once 'modelo/Funciones/carritoDAO.php';
 require_once 'modelo/utilitario.php';
 
-class ControladorCategoria{
+class ControladorCarrito{
   
     /* ==============================
      Registro de Usuario Web     
@@ -13,10 +13,7 @@ class ControladorCategoria{
  
  ///aqui
   
-
-
-
-    public function ctrRegistroCategoria(){
+    public function ctrRegistroCarrito(){
       
         if(isset($_POST["id"])){
          
@@ -34,15 +31,15 @@ class ControladorCategoria{
             //  if (move_uploaded_file($_FILES['subir_archivo']['tmp_name'], $subir_archivo)) {
                // $mutil -> console_log('esta ingresando');
                   $datos = array(
-                        "nombre"=>$_POST["nombre"],
-                        "tipo"=>$_POST["tipo"],
+                        "monto"=>$_POST["monto"],
+                        
                         
                        //  "imagen"=>$subir_archivo
                          );
           
-                    $tabla = "categoria";
-                    $Categoriad = new categoriaDAO ();
-                    $respuesta = $Categoriad -> addCategoria($tabla,$datos);
+                    $tabla = "carrito";
+                    $Carritod = new carritoDAO ();
+                    $respuesta = $Carritod -> addCarrito($tabla,$datos);
                    // return $respuesta;  
                     if ($respuesta==true){
                       return "true";
@@ -58,8 +55,8 @@ class ControladorCategoria{
             }else{
              
                $datos = array("id"=>$_POST["id"],
-            "nombre"=>$_POST["nombre"],
-            "tipo"=>$_POST["tipo"],
+            "monto"=>$_POST["monto"],
+            
                    
                    // "imagen"=>""
                  
@@ -67,9 +64,9 @@ class ControladorCategoria{
                    
                    );
             
-                  $tabla = "categoria";
-                  $Categoriad = new categoriaDAO();
-                  $respuesta = $Categoriad -> updateCategoria($tabla,$datos);
+                  $tabla = "carrito";
+                  $Carritod = new carritoDAO();
+                  $respuesta = $Carritod -> updateCarrito($tabla,$datos);
             
                   //return $respuesta;
                   if ($respuesta==true){
@@ -91,12 +88,12 @@ class ControladorCategoria{
 
 
 
-      public function ctrListarCategoria($pagina,$cantidad){
+      public function ctrListarCarrito($pagina,$cantidad){
       
             
-       $tabla = "categoria";
-       $Categoriad = new categoriaDAO();
-        $respuesta = $Categoriad -> listCategoria($pagina,$cantidad);
+       $tabla = "carrito";
+       $Carritod = new carritoDAO();
+        $respuesta = $Carritod -> listCarrito($pagina,$cantidad);
     
         return $respuesta;
   
@@ -105,13 +102,13 @@ class ControladorCategoria{
 
 
           
-      public function ctrActualizarEstadoCategoria($id){
+      public function ctrActualizarEstadoCarrito($id){
       
 
-        $tabla = "categoria";
+        $tabla = "carrito";
         $datos = array("id"=>$id);
-        $Categoriad = new categoriaDAO();
-        $respuesta = $Categoriad -> updatestatuscategoria($tabla,$datos);
+        $Carritod = new carritoDAO();
+        $respuesta = $Carritod -> updatestatuscarrito($tabla,$datos);
         return $respuesta; 
         
       

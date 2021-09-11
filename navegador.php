@@ -20,19 +20,19 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./UsuarioWeb.php" class="nav-link active">
+                <a href="./usuarioweb.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Usuarios </p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./UsuarioMovil.php" class="nav-link ">
+                <a href="./usuariocliente.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Usuarios Clientes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./UsuarioMovil.php" class="nav-link ">
+                <a href="./usuarioproveedor.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Usuarios Proveedores</p>
                 </a>
@@ -50,12 +50,14 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="./Categoria.php" class="nav-link ">
+                <a href="./ventas.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ventas</p>
                 </a>
               </li>
             </ul>
+
+            
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -68,7 +70,7 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="./Categoria.php" class="nav-link ">
+                <a href="./consultasventas.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Consulta Ventas</p>
                 </a>
@@ -86,15 +88,22 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="./Categoria.php" class="nav-link ">
+                <a href="./repuesto.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Articulos</p>
+                  <p>Repuesto</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./Categoria.php" class="nav-link ">
+                <a href="./categoria.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categorias</p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="./vehiculo.php" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vehiculo</p>
                 </a>
               </li>
             </ul>
@@ -111,7 +120,7 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="./Categoria.php" class="nav-link ">
+                <a href="./ingresos.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ingresos</p>
                 </a>
@@ -130,7 +139,7 @@
             <ul class="nav nav-treeview">
               
               <li class="nav-item">
-                <a href="./Categoria.php" class="nav-link ">
+                <a href="./consultacompra.php" class="nav-link ">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Consulta Compras</p>
                 </a>
@@ -150,13 +159,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./ReporteComportamientos.php" class="nav-link">
+                <a href="./reportecontizacion.php" class="nav-link">
                   <i class=" fas fa-hand-holding-usd"></i>
                   <p>Reportes de cotizacion</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./reporte2.php" class="nav-link">
+                <a href="./reporte.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Reporte</p>
                 </a>

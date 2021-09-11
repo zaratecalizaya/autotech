@@ -1,6 +1,6 @@
 <?php
  
-class categoriaDAO {
+class marcaDAO {
  
     private $db;
     // constructor
@@ -25,7 +25,7 @@ class categoriaDAO {
 
  
        
-    public function addCategoria($tabla,$datos) { //regusu et no es
+    public function addMarca($tabla,$datos) { //regusu et no es
 
       require_once 'modelo/Conexion/connectbd.php';
       require_once 'modelo/utilitario.php';
@@ -43,13 +43,13 @@ class categoriaDAO {
       		
       			
       				
-              $consulta ="INSERT INTO ".$tabla." (nombre,tipo) VALUES('".$datos["nombre"]."','".$datos["tipo"]."')";
+              $consulta ="INSERT INTO ".$tabla." (nombre) VALUES('".$datos["nombre"]."')";
            
               $result=mysqli_query($link,$consulta);
               if ($result ==true){
                 return "true";
               }else {
-                return "Error al guardar el categoria";
+                return "Error al guardar el marca";
               }
             
 			
@@ -64,14 +64,14 @@ class categoriaDAO {
 
 
 
-	   public function iscategoriaexist($tabla, $id) {
+	   public function ismarcaexist($tabla, $id) {
 
       require_once 'modelo/Conexion/connectbd.php';
       // connecting to database
       $this->db = new DB_Connect();
       $link=$this->db->connect();
   
-      if ($result = mysqli_query($link,"SELECT * from ".$tabla." WHERE id_categoria = '".$id."'")) {
+      if ($result = mysqli_query($link,"SELECT * from ".$tabla." WHERE id_marca = '".$id."'")) {
 
         /* determinar el número de filas del resultado */
         $num_rows  = mysqli_num_rows($result);
@@ -90,17 +90,17 @@ class categoriaDAO {
   }
 
 
-    public function updateCategoria($tabla,$datos) { //regusu et no es
+    public function updateMarca($tabla,$datos) { //regusu et no es
 
       require_once 'modelo/Conexion/connectbd.php';
       // connecting to database
       $this->db = new DB_Connect();
       $link=$this->db->connect();
   
-      $pu=$this->iscategoriaexist($tabla, $datos["id"]);
+      $pu=$this->ismarcaexist($tabla, $datos["id"]);
       if($pu==true){
         
-          $result=mysqli_query($link,"UPDATE ".$tabla." SET nombre='".$datos["nombre"]."',tipo='".$datos["tipo"]."'   where id_categoria = ".$datos["id"]);
+          $result=mysqli_query($link,"UPDATE ".$tabla." SET nombre='".$datos["nombre"]."'  where id_marca = ".$datos["id"]);
           return $result;
              
       }else{
@@ -109,42 +109,37 @@ class categoriaDAO {
     }
 
  
-    public function listCategoria($pagina,$cantidad){
+    public function listMarca($pagina,$cantidad){
       require_once 'modelo/Conexion/connectbd.php';
           // connecting to database
           $this->db = new DB_Connect();
           $link=$this->db->connect();
       //$json=$cuenta;
       
-      $query = "SELECT id_categoria,nombre,tipo FROM categoria  ";
+      $query = "SELECT id_marca,nombre FROM marca  ";
       $result = mysqli_query($link,$query) or die('Consulta fallida: ' . mysqli_error($link));
   
       $json = array();
       
       if(mysqli_num_rows($result)>0){
          
-       while ($line = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-         // $destado ="Deshabilitado";
-         //if ($line["estado"]==1){
-           // $destado ="Habilitado";
-        }        
-          array_push($json, array($line["id_categoria"],$line["nombre"],$line["tipo"]));
-         }
+        while ($line = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        //  $destado ="Deshabilitado";
+        // if ($line["estado"]==1){
+         //   $destado ="Habilitado";
+       // }        
+          array_push($json, array($line["id_marca"],$line["nombre"]));
+        }
         
-      
-      
-     
+      }
       
       mysqli_close($link);
       return $json;
       
-          }
-          
-            
-
+    }
   
 
-     public function updatestatuscategoria($tabla,$datos) { //regusu et no es
+    public function updatestatusmarca($tabla,$datos) { //regusu et no es
 
       require_once 'modelo/Conexion/connectbd.php';
         // connecting to database
@@ -153,15 +148,23 @@ class categoriaDAO {
     
       
         
-        $pu=$this->iscategoriaexist($tabla, $datos["id"]);
+        $pu=$this->ismarcaexist($tabla, $datos["id"]);
         if($pu==true){
-          $result=mysqli_query($link,"UPDATE ".$tabla." SET estado=ABS(estado-1) where id_categoria = ".$datos["id"]);
+          $result=mysqli_query($link,"UPDATE ".$tabla." SET estado=ABS(estado-1) where id_marca = ".$datos["id"]);
           return $result;
       	}else{
       		return false;
       	}
       
     }  
-     
+
+
+
+      
+  
 }
+ 
+ 
+ 
+ 
 ?>

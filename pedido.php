@@ -71,12 +71,12 @@ if (!isset($_SESSION['session_id'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-white">Categoria</h1>
+            <h1 class="m-0 text-white">Pedido</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="tablero.php">Inicio</a></li>
-              <li class="breadcrumb-item active text-white">Categoria</li>
+              <li class="breadcrumb-item active text-white">Pedido</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -91,7 +91,7 @@ if (!isset($_SESSION['session_id'])) {
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header" >
-                <h3 class="card-title">Lista de Categoria</h3>
+                <h3 class="card-title">Lista de Marca</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -99,49 +99,58 @@ if (!isset($_SESSION['session_id'])) {
                   <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Tipo</th>
-                  
+                    <th>Fecha Pedido</th>
+                    <th>Fecha Entrega</th>
+                    
+                    <th>Hora Pedido</th>
+                    <th>Hora Entrega</th>
+                    <th>Precio Total</th>
+                    <th>Estado</th>
                     <th>Acciones</th>
                   </tr>
                   </thead>
                   <tbody>
                   <?php 
-                    require_once 'Controlador/categoriaController.php';
-                   $categoria= new ControladorCategoria();
-                    $list=  $categoria -> ctrListarCategoria(1,1000);
+                    require_once 'Controlador/pedidoController.php';
+                   $pedido = new ControladorPedido();
+                    $list=  $pedido -> ctrListarPedido(1,1000);
                     
                     while (count($list)>0){
-                      $Categoria = array_shift($list);
+                      $Pedido = array_shift($list);
                       echo "<tr>";
-                      $Did = array_shift($Categoria);
+                      $Did = array_shift($Pedido);
                       echo "<td>".$Did."</td>";
-                      $Dnombre = array_shift($Categoria);
-                      echo "<td>".$Dnombre."</td>";
-                      $Dtipo = array_shift($Categoria);
-                      echo "<td>".$Dtipo."</td>";
+                      $Dfecha_pedido = array_shift($Pedido);
+                      echo "<td>".$Dfecha_pedido."</td>";
+                      $fecha_entrega = array_shift($Pedido);
+                      echo "<td>".$Dfecha_entrega."</td>";
+                      $Dhora_pedido = array_shift($Pedido);
+                      echo "<td>".$Dhora_pedido."</td>";
+                      $Dhora_entrega = array_shift($Pedido);
+                      echo "<td>".$Dhora_entrega."</td>";
+                
                      /* $Dimagen = array_shift($Vehiculo);
                       if ($Dimagen!=""){
                         echo "<td><img src='".$Dimagen."' width='100'></td>";  
                       }else{
                         echo "<td></td>";
                       }*/
-                     // $Destado = array_shift($Almacen);
-                    /*  $Destadobtn="Habilitar";
+                      $Destado = array_shift($Pedido);
+                      $Destadobtn="Habilitar";
                       $DestadoIco="thumbs-up";
                       echo "<td>".$Destado."</td>";
                       if ($Destado=="Habilitado"){
                         $Destadobtn="Deshabilitar";
                         $DestadoIco="thumbs-down";
-                      }*/
+                      }
                       
                       
                       echo '<td>
-                              <button class="btn" onclick="saveData('.$Did.',\''.$Dnombre.'\',\''.$Dtipo.'\')"><i class="fas fa-edit"></i> Editar</button>
+                              <button class="btn" onclick="saveData('.$Did.',\''.$Dfecha_pedido.'\',\''.$Dfecha_entrega.'\',\''.$Dhora_pedido.'\',\''.$Dhora_entrega.'\',,\''.$Dprecio_total.'\')"><i class="fas fa-edit"></i> Editar</button>
                               <button class="btn" onclick="updateStatus('.$Did.')"><i class="far fa-'.$DestadoIco.'"></i>'.$Destadobtn.'</button>
                      
-                              <form action="deletecategoria.php" class="d-inline" method="post" >
-                              <input type="hidden" id="idcategoria" name="idcategoria" value="'.$Did .'" />
+                              <form action="deletepedido.php" class="d-inline" method="post" >
+                              <input type="hidden" id="idpedido" name="idpedido" value="'.$Did .'" />
                                <button type="submit" class="btn btn-danger">Eliminar</button>
                             </form> 
                               </td>';
@@ -167,8 +176,8 @@ if (!isset($_SESSION['session_id'])) {
  
         <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title"><label id="TituloUser">Agregar Categoria</label> </h3> 
-                <button id="nuevocategoria" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo Categoria</button>
+                <h3 class="card-title"><label id="TituloUser">Agregar pedido</label> </h3> 
+                <button id="nuevomarca" class="btn float-right" onclick="newUser()" > <i class="fas fa-user-plus"></i> Nuevo pedido</button>
                 
               </div>
               <!-- /.card-header -->
@@ -180,14 +189,26 @@ if (!isset($_SESSION['session_id'])) {
                     <input type="hidden"  class="form-control"  id="id" name="id" placeholder="ID" value="0" readonly="true">
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputNombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre la categoria">
+                    <label for="exampleInputNombre">Fecha Pedido</label>
+                    <input type="text" class="form-control" id="fecha_pedido" name="fecha_pedido" placeholder="Ingrese el nombre del almacen">
                   </div>
-                  
                   <div class="form-group">
-                    <label for="exampleInputNombre">Tipo</label>
-                    <input type="text" class="form-control" id="tipo" name="tipo" placeholder="Ingrese el nombre del almacen">
+                    <label for="exampleInputNombre">Fecha Entrega</label>
+                    <input type="text" class="form-control" id="fecha_entrega" name="fecha_entrega" placeholder="Ingrese el nombre del almacen">
                   </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Hora Pedido</label>
+                    <input type="text" class="form-control" id="hora_pedido" name="hora_pedido" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Hora Entrega</label>
+                    <input type="text" class="form-control" id="hora_entrega" name="hora_entrega" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputNombre">Precio Total</label>
+                    <input type="text" class="form-control" id="precio_total" name="precio_total" placeholder="Ingrese el nombre del almacen">
+                  </div>
+                                   
 
                  
                     <?php
@@ -225,7 +246,7 @@ if (!isset($_SESSION['session_id'])) {
                 <div class="card-footer">
                   <?php
                   
-                    $resp= $categoria -> ctrRegistroCategoria();
+                    $resp= $pedido -> ctrRegistroPedido();
                     //echo "<script> alert(' respuesta: ".$resp." ')</script>";
                     if ($resp=="true"){
                       //echo "<script> alert(' respuesta: ".$resp." ')</script>";
@@ -293,27 +314,34 @@ if (!isset($_SESSION['session_id'])) {
 </script>
 
 <script>
-  function saveData(id,nombre,tipo){
+  function saveData(id,fecha_pedido,fecha_entrega,hora_pedido,hora_entrega,precio_total){
     document.getElementById("id").value = id;
-    document.getElementById("nombre").value = nombre;
-    document.getElementById("tipo").value = tipo;
+    document.getElementById("fecha_pedido").value = fecha_pedido;
+    document.getElementById("fecha_entrega").value = fecha_entrega;
+    document.getElementById("hora_pedido").value = hora_pedido;
+    document.getElementById("hora_entrega").value = hora_entrega;
+    document.getElementById("precio_total").value = precio_total;
+    //document.getElementById("nombre").value = nombre;
   
    
-    $('#TituloUser').text("Editar almacen");
+    $('#TituloUser').text("Editar pedido");
 //    document.getElementById("TituloUser").value = "Editar Usuario";  
   }
   
   function newUser(){
     document.getElementById("id").value = 0;
-    document.getElementById("nombre").value = "";
-    document.getElementById("tipo").value = "";
-    
+    document.getElementById("fecha_pedido").value = "";
+    document.getElementById("fecha_entrega").value = "";
+    document.getElementById("hora_pedido").value = "";
+    document.getElementById("hora_entrega").value = "";
+    document.getElementById("precio_total").value = "";
+   // document.getElementById("id").value = "";
    
-    $('#TituloUser').text("Agregar almacen");
+    $('#TituloUser').text("Agregar pedido");
   //  document.getElementById("TituloUser").value = "Agregar Usuario";  
   }
   
- /* function updateStatus(id){
+  function updateStatus(id){
       var parametros = {
                 "id" : id
             
@@ -321,14 +349,14 @@ if (!isset($_SESSION['session_id'])) {
       
       $.ajax({
         type: "POST",
-        url: "estadovehiculo.php",
+        url: "estadopedido.php",
         data: parametros,
         success:function( msg ) {
           window.location.href = window.location.href;
          //alert( "Data actualizada. " + msg );
         }
        });
-  }*/
+    }
   
 </script>
 
